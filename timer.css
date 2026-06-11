@@ -1,0 +1,57 @@
+#timer {
+    padding: 1.5rem 0;
+    color:white;
+    width:100%;
+    box-sizing: border-box;
+    text-align:center;
+}
+#timer .fc-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 0.75rem;
+}
+
+#timer .fc-label {
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin: 0;
+    white-space: nowrap;
+}
+
+#timer .fc-date {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0;
+}
+#timer .fc-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 1.25rem;
+}
+#timer .fc-tile {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 14px 8px 10px;
+    text-align: center;
+}
+#timer .fc-num {
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 1;
+}
+#timer .fc-unit {
+    font-size: 12px;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+#timer .fc-note {
+    font-size: 14px;
+    opacity: 0.5;
+}

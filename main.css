@@ -1,0 +1,99 @@
+html {
+    min-height:100%;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns: 25vw 50vw 25vw;
+}
+
+#title {
+    text-align: center;
+    font-size: 24pt;
+    color: white;    
+}
+
+#bg {
+    position:fixed;
+    inset:-15px;
+    background-image:url(files/HNI_0017e.jpg);
+    background-position:center;
+    background-size:cover;
+    filter:blur(5px) brightness(0.5);
+    z-index:-99;
+}
+
+#info {
+    position:absolute;
+    top:0;
+    right:15px;
+    text-align:right;
+    color:rgba(255, 255, 255, 0.4);
+    margin:0 auto;
+}
+
+#about {
+    position: static;
+    width: 100%;
+    color: white;
+    font-size: 18pt;
+    align-self: flex-start;
+    overflow-y: auto;
+    flex: 1; 
+    scrollbar-width: none;
+    margin:0;
+}
+
+#copyright {
+    font-size:18px;
+}
+
+#updated {
+    font-size:14px;
+}
+
+#centerpanel {
+    display: flex;
+    grid-column: 2;
+    position: relative;
+    margin: 15px;
+    box-sizing: border-box;
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: calc(100vh - 30px);
+    overflow: hidden;
+    text-align:center;
+}
+
+#leftLanel {
+    position:sticky;
+    position:relative;
+    grid-column:1;
+    left: 0;
+    top: 0;
+    height: calc(100vh - 30px);
+    margin: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    border: 10px dashed rgba(255,255,255,0.2);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+#rightPanel {
+    position:sticky;
+    position:relative;
+    grid-column:3;
+    right: 0;
+    top: 0;
+    height: calc(100vh - 30px);
+    margin: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    border: 10px dashed rgba(255,255,255,0.2);
+}

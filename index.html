@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VDSMP Film Club</title>
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <link rel="stylesheet" href="timer.css" type="text/css">
+    <style>
+        html {
+            overflow-y: scroll;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        html::-webkit-scrollbar { /* WebKit */
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="bg"></div>
+
+<div id="leftPanel"></div>
+
+<div id="centerpanel">
+    <div id="title">
+        <h1>VDSMP Film Club</h1>
+    </div>
+    <h2 id="about">we watch films once a month, on the first Sunday, at 3PM PST.</h2>
+    <div id="timer">
+        <div class="fc-header">
+            <span class="fc-label">Next meeting</span>
+            <span class="fc-date"><time id="fc-time"></time></span>
+        </div>
+        <div class="fc-tiles">
+            <div class="fc-tile"><div class="fc-num" id="fc-days">--</div><div class="fc-unit">days</div></div>
+            <div class="fc-tile"><div class="fc-num" id="fc-hours">--</div><div class="fc-unit">hours</div></div>
+            <div class="fc-tile"><div class="fc-num" id="fc-mins">--</div><div class="fc-unit">minutes</div></div>
+            <div class="fc-tile"><div class="fc-num" id="fc-secs">--</div><div class="fc-unit">seconds</div></div>
+        </div>
+        <p class="fc-note" id="fc-tz"></p>
+    </div>
+
+</div>
+
+<div id="rightPanel">
+    <div id="info">
+        <h2 id="copyright">©2026 prog.gay</h2>
+        <h2 id="updated">updated: 6/11/2026</h2>
+    </div>
+</div>
+
+<script src="timer.js"></script>
+</body>
+</html>

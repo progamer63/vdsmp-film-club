@@ -9,6 +9,7 @@ async function loadTitles() {
     titles.push(title);
   }
 
+  titles.sort(() => Math.random() - 0.5);
   document.querySelector("#actualTitles").innerHTML = titles.map(t => `<p>${t}</p>`).join("");
 }
 

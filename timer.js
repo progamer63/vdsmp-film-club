@@ -1,28 +1,19 @@
-const MEETING_HOUR = 15; // 3:00 PM — matches "3PM PST" in your about text
-
-function firstSundayOf(year, month) {
-    const d = new Date(year, month, 1);
-    const dayOfWeek = d.getDay(); // 0 = Sunday
-    const offset = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
-    return new Date(year, month, 1 + offset, MEETING_HOUR, 0, 0);
-}
-
-function nextMeeting() {
-    const now = new Date();
-    let candidate = firstSundayOf(now.getFullYear(), now.getMonth());
-
-    if (candidate <= now) {
-        const nextMonth = now.getMonth() === 11
-            ? new Date(now.getFullYear() + 1, 0, 1)
-            : new Date(now.getFullYear(), now.getMonth() + 1, 1);
-        candidate = firstSundayOf(nextMonth.getFullYear(), nextMonth.getMonth());
-    }
-
-    return candidate;
-}
+const MEETING_HOUR_PST = 15;
 
 function pad(n) {
     return String(n).padStart(2, '0');
+}
+
+function nextSunday() {
+    const now = new Date();
+    const dayOfWeek = now.getUTCDay();
+    const daysUntil = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
+
+    const sunday = new Date(now);
+    sunday.setUTCDate(now.getUTCDate() + daysUntil);
+    sunday.setUTCHours(MEETING_HOUR_PST + 8, 0, 0, 0); // PST = UTC-8
+
+    return sunday;
 }
 
 function formatDate(d) {
@@ -48,13 +39,13 @@ function isoLocal(d) {
     return `${yyyy}-${mo}-${dd}T${H}:${M}:${S}${sign}${hh}:${mm}`;
 }
 
-let target = nextMeeting();
+let target = nextSunday();
 
 const timeEl = document.getElementById('fc-time');
 const tzEl   = document.getElementById('fc-tz');
 
 function updateDateDisplay() {
-    timeEl.textContent = formatDate(target) + ' at 3:00 PM';
+    timeEl.textContent = formatDate(target) + ' at 3:00 PM PST';
     timeEl.setAttribute('datetime', isoLocal(target));
 }
 
@@ -68,7 +59,7 @@ function tick() {
     const now = new Date();
 
     if (now >= target) {
-        target = nextMeeting();
+        target = nextSunday();
         updateDateDisplay();
     }
 

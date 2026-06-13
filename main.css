@@ -84,14 +84,36 @@ body {
 }
 
 #submittedMovies {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
     color: white;
-    padding:0 15px;
-    font-size:36px;
+    padding: 0 15px;
+    font-size: 36px;
+    overflow: hidden;
+}
+
+#submittedMovies h2 {
+    flex-shrink: 0;
+    margin:0;
+    margin-top: 30px;
+    margin-left: 15px;
 }
 
 #actualTitles {
     font-size: 24px;
-    line-height:175%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    flex: 1;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0px,
+        black 10px,
+        black calc(100% - 20px),
+        transparent 100%
+    );
 }
 
 #actualTitles p {

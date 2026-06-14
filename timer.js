@@ -1,4 +1,4 @@
-const MEETING_HOUR = 15; // 3:00 PM
+const MEETING_UTC_HOUR = 22; // fixed UTC — displays as 3PM PDT in summer, 2PM PST in winter
 
 function pad(n) {
     return String(n).padStart(2, '0');
@@ -6,43 +6,29 @@ function pad(n) {
 
 function nextMeeting() {
     const now = new Date();
-
-    // Find this week's Sunday at 3PM
     const candidate = new Date(now);
-    const dayOfWeek = candidate.getDay(); // 0 = Sunday
-    const daysUntilSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
-    candidate.setDate(candidate.getDate() + daysUntilSunday);
-    candidate.setHours(MEETING_HOUR, 0, 0, 0);
 
-    // If that moment has already passed, go to next Sunday
+    const daysUntilSunday = candidate.getUTCDay() === 0 ? 0 : 7 - candidate.getUTCDay();
+    candidate.setUTCDate(candidate.getUTCDate() + daysUntilSunday);
+    candidate.setUTCHours(MEETING_UTC_HOUR, 0, 0, 0);
+
     if (candidate <= now) {
-        candidate.setDate(candidate.getDate() + 7);
+        candidate.setUTCDate(candidate.getUTCDate() + 7);
     }
 
     return candidate;
 }
 
 function formatDate(d) {
-    return d.toLocaleDateString(undefined, {
+    return d.toLocaleString(undefined, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short'
     });
-}
-
-function isoLocal(d) {
-    const off = -d.getTimezoneOffset();
-    const sign = off >= 0 ? '+' : '-';
-    const hh = pad(Math.floor(Math.abs(off) / 60));
-    const mm = pad(Math.abs(off) % 60);
-    const yyyy = d.getFullYear();
-    const mo = pad(d.getMonth() + 1);
-    const dd = pad(d.getDate());
-    const H = pad(d.getHours());
-    const M = pad(d.getMinutes());
-    const S = pad(d.getSeconds());
-    return `${yyyy}-${mo}-${dd}T${H}:${M}:${S}${sign}${hh}:${mm}`;
 }
 
 let target = nextMeeting();
@@ -51,8 +37,8 @@ const timeEl = document.getElementById('fc-time');
 const tzEl   = document.getElementById('fc-tz');
 
 function updateDateDisplay() {
-    timeEl.textContent = formatDate(target) + ' at 3:00 PM';
-    timeEl.setAttribute('datetime', isoLocal(target));
+    timeEl.textContent = formatDate(target);
+    timeEl.setAttribute('datetime', target.toISOString());
 }
 
 tzEl.textContent =

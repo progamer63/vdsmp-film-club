@@ -1,19 +1,25 @@
-const MEETING_HOUR_PST = 15;
+const MEETING_HOUR = 15; // 3:00 PM
 
 function pad(n) {
     return String(n).padStart(2, '0');
 }
 
-function nextSunday() {
+function nextMeeting() {
     const now = new Date();
-    const dayOfWeek = now.getUTCDay();
-    const daysUntil = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
 
-    const sunday = new Date(now);
-    sunday.setUTCDate(now.getUTCDate() + daysUntil);
-    sunday.setUTCHours(MEETING_HOUR_PST + 8, 0, 0, 0); // PST = UTC-8
+    // Find this week's Sunday at 3PM
+    const candidate = new Date(now);
+    const dayOfWeek = candidate.getDay(); // 0 = Sunday
+    const daysUntilSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+    candidate.setDate(candidate.getDate() + daysUntilSunday);
+    candidate.setHours(MEETING_HOUR, 0, 0, 0);
 
-    return sunday;
+    // If that moment has already passed, go to next Sunday
+    if (candidate <= now) {
+        candidate.setDate(candidate.getDate() + 7);
+    }
+
+    return candidate;
 }
 
 function formatDate(d) {
@@ -39,13 +45,13 @@ function isoLocal(d) {
     return `${yyyy}-${mo}-${dd}T${H}:${M}:${S}${sign}${hh}:${mm}`;
 }
 
-let target = nextSunday();
+let target = nextMeeting();
 
 const timeEl = document.getElementById('fc-time');
 const tzEl   = document.getElementById('fc-tz');
 
 function updateDateDisplay() {
-    timeEl.textContent = formatDate(target) + ' at 3:00 PM PST';
+    timeEl.textContent = formatDate(target) + ' at 3:00 PM';
     timeEl.setAttribute('datetime', isoLocal(target));
 }
 
@@ -59,7 +65,7 @@ function tick() {
     const now = new Date();
 
     if (now >= target) {
-        target = nextSunday();
+        target = nextMeeting();
         updateDateDisplay();
     }
 
